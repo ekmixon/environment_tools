@@ -49,9 +49,9 @@ class TestTypeUtils:
         mock_convert = mock.Mock(spec=_convert_mapping_to_graph)
         mock_convert.return_value = 'fake_graph'
         with mock.patch(
-                'environment_tools.type_utils._convert_mapping_to_graph',
-                mock_convert):
-            for i in range(5):
+                    'environment_tools.type_utils._convert_mapping_to_graph',
+                    mock_convert):
+            for _ in range(5):
                 assert location_graph() == 'fake_graph'
             assert mock_convert.call_count == 1
             assert location_graph(use_cache=False) == 'fake_graph'
@@ -88,10 +88,6 @@ class TestTypeUtils:
     def test_get_current_location(self, mock_data):
         mock_open = mock.mock_open(read_data='test   ')
 
-        if six.PY2:
-            open_module = '__builtin__.open'
-        else:
-            open_module = 'builtins.open'
-
+        open_module = '__builtin__.open' if six.PY2 else 'builtins.open'
         with mock.patch(open_module, mock_open):
             assert get_current_location('az') == 'test'

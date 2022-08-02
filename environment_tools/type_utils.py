@@ -109,7 +109,7 @@ def convert_location_type(location, source_type, desired_type):
         candidates |= set(nx.dfs_preorder_nodes(location_graph(), search_node))
 
     # Only return results that are of the correct type
-    result = filter(lambda x: x.endswith('_' + desired_type), candidates)
+    result = filter(lambda x: x.endswith(f'_{desired_type}'), candidates)
     return sorted([loc[:loc.rfind('_')] for loc in result])
 
 
